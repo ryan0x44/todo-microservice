@@ -1,0 +1,20 @@
+version: '2'
+services:
+  database:
+    build:
+      context: ./database
+    ports:
+     - "3306:3306"
+    volumes:
+      - todo-microservice-data:/var/lib/mysql
+    env_file: dev.env
+  go-kit:
+    build:
+      context: ./go-kit
+    depends_on:
+      - database
+    ports:
+      - "8080:8080"
+    env_file: dev.env
+volumes:
+  todo-microservice-data:
